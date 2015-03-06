@@ -1,12 +1,12 @@
 -- Lisää CREATE TABLE lauseet tähän tiedostoon
 CREATE TABLE KUKA (
     id SERIAL PRIMARY KEY,
-    name varchar(50) NOT NULL,
-    password varchar(50) NOT NULL
+    nimi varchar(50) NOT NULL,
+    salasana varchar(50) NOT NULL
 );
 CREATE TABLE TARKEYS (
     id SERIAL PRIMARY KEY,
-    tarkeysaste integer NOT NULL,
+    tarkeys integer NOT NULL,
     kuvaus varchar(200)
 );
 CREATE TABLE LUOKKA (
@@ -16,7 +16,7 @@ CREATE TABLE LUOKKA (
 );
 CREATE TABLE ASKARE (
     id SERIAL PRIMARY KEY,
-    name varchar(50) NOT NULL,
+    nimi varchar(50) NOT NULL,
     tarkeys integer references tarkeys(id),
     luokka integer references luokka(id),
     kuvaus varchar,
