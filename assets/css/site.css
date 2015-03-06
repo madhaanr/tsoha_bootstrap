@@ -8,3 +8,6 @@
   max-width: 1200px;
   margin: 0px auto;
 }
+.form-control{
+    width: 200px;
+}
