@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Lisää askare</h1>
+    <table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Nimi</th>
+            <th>Tärkeysaste</th>
+            <th>Luokka</th>
+            <th>Kuvaus</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <form>
+                <td><input class="form-control" type="text"></td>
+                <td><input class="form-control" type="text"></td>
+                <td><input class="form-control" type="text"></td>
+                <td><input class="form-control" type="text"></td>
+                <td><button class="btn btn-danger">Lisää</button></td>
+            </form>
+        </tr>
+    </tbody>
+    </table>
+{% endblock %}

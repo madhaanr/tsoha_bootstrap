@@ -24,4 +24,8 @@
     public static function askareenmuokkaus() {
         View::make('askaremuokkaus.html.twig');
     }
+    
+    public static function askareenlisays() {
+        View::make('askareenlisays.html.twig');
+    }
   }

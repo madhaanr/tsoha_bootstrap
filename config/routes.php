@@ -19,3 +19,7 @@
   $routes->get('/askareenmuokkaus', function() {
       HelloWorldController::askareenmuokkaus();
   });
+  
+  $routes->get('/askareenlisays', function() {
+      HelloWorldController::askareenlisays();
+  });
