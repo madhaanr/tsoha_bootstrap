@@ -11,15 +11,17 @@
     public static function sandbox(){
       // Testaa koodiasi täällä
       //echo 'Hello World!';
-        View::make('helloworld.html');
+        //View::make('helloworld.html');
+        $askareet=Askare::all();
+        Kint::dump($askareet);
     }
     
     public static function login() {
         View::make('login.html');
     }
-    public static function askareet() {
-        View::make('askarelista.html.twig');
-    }
+//    public static function askareet() {
+//        View::make('askarelista.html.twig');
+//    }
     
     public static function askareenmuokkaus() {
         View::make('askaremuokkaus.html.twig');
