@@ -12,12 +12,16 @@
       HelloWorldController::login();
   });
   
-  $routes->get('/askareenmuokkaus', function() {
-      HelloWorldController::askareenmuokkaus();
-  });
+//  $routes->get('/askareenmuokkaus', function() {
+//      HelloWorldController::askareenmuokkaus();
+//  });
+//  
+//  $routes->get('/askareenlisays', function() {
+//      HelloWorldController::askareenlisays();
+//  });
   
-  $routes->get('/askareenlisays', function() {
-      HelloWorldController::askareenlisays();
+  $routes->get('askare/new', function() {
+      AskareController::create();
   });
   
   $routes->get('/askare', function() {
@@ -26,4 +30,8 @@
   
   $routes->get('/askare/:id', function($id) {
       AskareController::find($id);
+  });
+  
+  $routes->post('/askare', function() {
+      AskareController::store();
   });

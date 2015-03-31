@@ -48,4 +48,14 @@ class Askare extends BaseModel {
         return null;
     }
 
+    public static function save() {
+        $query = DB::connection()->prepare('INSERT INTO ASKARE (nimi, tarkeys, luokka, kuvaus) VALUES (:nimi,:tarkeys,'
+                . ':luokka,:kuvaus) RETURNING id');
+        $query->execute(array('nimi'=>$this->nimi, 'tarkeys'=>$this->tarkeys, 'luokka'=>$this->luokka, 'kuvaus'=>$this->kuvaus));
+        $row = $query->fetch();
+        $this->id=$row['id'];
+        Kint::trace();
+        Kint::dump($row);
+    }
+
 }
