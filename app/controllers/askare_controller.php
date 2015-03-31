@@ -25,6 +25,9 @@ class AskareController extends BaseController {
             'luokka' => $params['luokka'],
             'kuvaus' => $params['kuvaus']
         ));
-        redirect::to('/askare/' . $askare->id, array('message' => 'Askare lisätty!'));    
+        $askare->save();
+//        Kint::dump($askare);
+//        Kint::dump($askare->id);
+        Redirect::to('/askare/' . $askare->id, array('message' => 'Askare lisätty!'));   
     }
 }

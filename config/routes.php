@@ -20,7 +20,11 @@
 //      HelloWorldController::askareenlisays();
 //  });
   
-  $routes->get('askare/new', function() {
+  $routes->post('/askare', function() {
+      AskareController::store();
+  });
+  
+  $routes->get('/askare/new', function() {
       AskareController::create();
   });
   
@@ -32,6 +36,4 @@
       AskareController::find($id);
   });
   
-  $routes->post('/askare', function() {
-      AskareController::store();
-  });
+  

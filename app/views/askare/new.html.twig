@@ -13,12 +13,12 @@
     </thead>
     <tbody>
         <tr>
-            <form>
-                <td><input class="form-control" type="text"></td>
-                <td><input class="form-control" type="text"></td>
-                <td><input class="form-control" type="text"></td>
-                <td><input class="form-control" type="text"></td>
-                <td><button class="btn btn-danger">Lisää</button></td>
+            <form method="post" action="{{base_path}}/askare">
+                <td><input name="nimi" class="form-control" type="text"></td>
+                <td><input name="tarkeys" class="form-control" type="text"></td>
+                <td><input name="luokka" class="form-control" type="text"></td>
+                <td><input name="kuvaus" class="form-control" type="text"></td>
+                <td><button type="submit" class="btn btn-danger">Lisää</button></td>
             </form>
         </tr>
     </tbody>
