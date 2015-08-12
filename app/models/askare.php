@@ -50,12 +50,20 @@ class Askare extends BaseModel {
 
     public function save() {
         $query = DB::connection()->prepare('INSERT INTO ASKARE (nimi, kuvaus) VALUES (:nimi,:kuvaus) RETURNING id');
-        $query->execute(array('nimi'=>$this->nimi, 'kuvaus'=>$this->kuvaus));
+        $query->execute(array('nimi' => $this->nimi, 'kuvaus' => $this->kuvaus));
 //        Kint::dump($this->nimi . $this->tarkeys . $this->luokka . $this->kuvaus);
         $row = $query->fetch();
-        $this->id=$row['id'];
+        $this->id = $row['id'];
 //        Kint::trace();
         Kint::dump($row);
+    }
+
+    public function validate_name() {
+        $errors = array();
+        if ($this->name == '' || $this->name == null) {
+            $errors[] = 'Nimi ei saa olla tyhjä!';
+        }
+        return $errors;
     }
 
 }
