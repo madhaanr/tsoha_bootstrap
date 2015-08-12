@@ -78,8 +78,9 @@ class Askare extends BaseModel {
     
     public static function update($id) {
         $query =DB::connection()->prepare('update askare set (nimi, kuvaus) VALUES (:nimi,:kuvaus) where id=:id');
-        $query->execute(array('id'=>$id));
-        
+        $query->execute(array('id'=>  $this->id,'nimi' => $this->nimi, 'kuvaus' => $this->kuvaus ));
+        $row=$query->fetch();
+        $this->id=$id;
     }
     
     public function validate_name() {

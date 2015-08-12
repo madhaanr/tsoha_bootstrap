@@ -36,7 +36,7 @@ class AskareController extends BaseController {
 
     public static function edit($id) {
         $askare = Askare::find($id);
-        View::make('askare/edit.html.twig', array('attributes' => $askare));
+        View::make('askare/edit.html.twig', array('askare' => $askare));
     }
 
     public static function update($id) {
@@ -51,19 +51,18 @@ class AskareController extends BaseController {
         ));
 
         $errors = $askare->errors();
-        if(count($errors)==0) {
+        if (count($errors) == 0) {
             $askare->update();
-            Redirect::to('/askare/'.$askare->id,array('message'=>'Askaretta muokattu!'));
-        }
-        else {
-            View::make('askare/edit.html.twig',array('errors'=>$errors, 'askare'=>$askare));
+            Redirect::to('/askare/' . $askare->id, array('message' => 'Askaretta muokattu!'));
+        } else {
+            View::make('askare/:id/edit.html.twig', array('errors' => $errors, 'askare' => $askare));
         }
     }
-    
+
     public static function destroy($id) {
-        $askare = new Askare(array('id'=>$id));
+        $askare = new Askare(array('id' => $id));
         $askare->destroy();
-        Redirect::to('/askare',array('message'=>'Askare poistettu'));
+        Redirect::to('/askare', array('message' => 'Askare poistettu'));
     }
 
 }
