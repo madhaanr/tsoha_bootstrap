@@ -24,7 +24,7 @@
                 <td>{{askare.tarkeys}}</td>
                 <td>{{askare.luokka}}</td>
                 <td>{{askare.kuvaus}}</td>
-                <td><a href="askareenmuokkaus" class="btn btn-default">Muokkaa</a></td>
+                <td><a href="{{base_path}}/askare/{{askare.id}}/edit" class="btn btn-default">Muokkaa</a></td>
                 <td><button class="btn btn-danger">Poista</button></td>
             </tr>
             {% endfor %}

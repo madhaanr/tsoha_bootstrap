@@ -59,5 +59,11 @@ class AskareController extends BaseController {
             View::make('askare/edit.html.twig',array('errors'=>$errors, 'askare'=>$askare));
         }
     }
+    
+    public static function destroy($id) {
+        $askare = new Askare(array('id'=>$id));
+        $askare->destroy();
+        Redirect::to('/askare',array('message'=>'Askare poistettu'));
+    }
 
 }

@@ -57,6 +57,31 @@ class Askare extends BaseModel {
         $this->id = $row['id'];
     }
 
+    public static function edit($id) {
+        $query=DB::connection()->prepare('select * from askare where id = :id limit 1');
+        $query->execute(array('id'=>$id));
+        $row = $query->fetch();
+        if ($row) {
+            $askare = new Askare(array(
+                'id' => $row['id'],
+                'nimi' => $row['nimi'],
+                'tarkeys' => $row['tarkeys'],
+                'luokka' => $row['luokka'],
+                'kuvaus' => $row['kuvaus'],
+                'lisatty' => $row['lisatty'],
+                'kuka' => $row['kuka']
+            ));
+            return $askare;
+        }
+        return null;
+    }
+    
+    public static function update($id) {
+        $query =DB::connection()->prepare('update askare set (nimi, kuvaus) VALUES (:nimi,:kuvaus) where id=:id');
+        $query->execute(array('id'=>$id));
+        
+    }
+    
     public function validate_name() {
         $errors = array();
         if ($this->nimi == '' || $this->nimi == null) {
