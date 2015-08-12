@@ -6,6 +6,7 @@ class Askare extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators = array('validate_name');
     }
 
     public static function all() {
@@ -60,7 +61,7 @@ class Askare extends BaseModel {
 
     public function validate_name() {
         $errors = array();
-        if ($this->name == '' || $this->name == null) {
+        if ($this->nimi == '' || $this->nimi == null) {
             $errors[] = 'Nimi ei saa olla tyhjä!';
         }
         return $errors;

@@ -3,8 +3,7 @@
 class AskareController extends BaseController {
 
     public static function create() {
-        View::make('askare/new.html.twig');
-        Kint::trace();
+        View::make('askare/new.html.twig');  
     }
 
     public static function index() {
@@ -31,7 +30,7 @@ class AskareController extends BaseController {
             $askare->save();
             Redirect::to('/askare/' . $askare->id, array('message' => 'Askare lisätty!'));
         } else {
-            View::make('askare/new.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('askare/new.html.twig', array('errors' => $errors, 'attributes' => $attributes));
         }
     }
 
