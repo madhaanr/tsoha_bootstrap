@@ -6,7 +6,7 @@ class Askare extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array('validate_name');
+        $this->validators = array('validate_name','validate_tarkeys');
     }
 
     public static function all() {
@@ -50,19 +50,28 @@ class Askare extends BaseModel {
     }
 
     public function save() {
-        $query = DB::connection()->prepare('INSERT INTO ASKARE (nimi, kuvaus) VALUES (:nimi,:kuvaus) RETURNING id');
+        $query = DB::connection()->prepare('INSERT INTO ASKARE (nimi, kuvaus, lisatty) VALUES (:nimi,:kuvaus, NOW()) RETURNING id');
         $query->execute(array('nimi' => $this->nimi, 'kuvaus' => $this->kuvaus));
 //        Kint::dump($this->nimi . $this->tarkeys . $this->luokka . $this->kuvaus);
         $row = $query->fetch();
         $this->id = $row['id'];
-//        Kint::trace();
-        Kint::dump($row);
     }
 
     public function validate_name() {
         $errors = array();
         if ($this->nimi == '' || $this->nimi == null) {
             $errors[] = 'Nimi ei saa olla tyhjä!';
+        }
+        return $errors;
+    }
+    
+    public function validate_tarkeys() {
+        $errors=array();
+        if($this->tarkeys==''||$this->tarkeys==null) {
+            $errors[] = 'Tärkeys ei saa olla tyhjä!';
+        }
+        if(!is_numeric($this->tarkeys)||$this->tarkeys<0||$this->tarkeys>10) {
+            $errors[] = 'Tärkeysasteen pitää olla numero väliltä 1-10';
         }
         return $errors;
     }
