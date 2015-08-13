@@ -6,7 +6,7 @@ class Askare extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array('validate_name','validate_tarkeys');
+        $this->validators = array('validate_name', 'validate_tarkeys');
     }
 
     public static function all() {
@@ -58,8 +58,8 @@ class Askare extends BaseModel {
     }
 
     public static function edit($id) {
-        $query=DB::connection()->prepare('select * from askare where id = :id limit 1');
-        $query->execute(array('id'=>$id));
+        $query = DB::connection()->prepare('select * from askare where id = :id limit 1');
+        $query->execute(array('id' => $id));
         $row = $query->fetch();
         if ($row) {
             $askare = new Askare(array(
@@ -75,14 +75,14 @@ class Askare extends BaseModel {
         }
         return null;
     }
-    
-    public static function update($id) {
-        $query =DB::connection()->prepare('update askare set (nimi, kuvaus) VALUES (:nimi,:kuvaus) where id=:id');
-        $query->execute(array('id'=>  $this->id,'nimi' => $this->nimi, 'kuvaus' => $this->kuvaus ));
-        $row=$query->fetch();
-        $this->id=$id;
+
+    public function update($id) {
+        $query = DB::connection()->prepare('update askare set nimi = :nimi, tarkeys = :tarkeys, kuvaus = :kuvaus where id=:id');
+        $query->execute(array('nimi' => $this->nimi, 'tarkeys' => $this->tarkeys, 'kuvaus' => $this->kuvaus,'id' => $id));
+        $row = $query->fetch();
+//        $this->id = $row['id'];
     }
-    
+
     public function validate_name() {
         $errors = array();
         if ($this->nimi == '' || $this->nimi == null) {
@@ -90,13 +90,13 @@ class Askare extends BaseModel {
         }
         return $errors;
     }
-    
+
     public function validate_tarkeys() {
-        $errors=array();
-        if($this->tarkeys==''||$this->tarkeys==null) {
+        $errors = array();
+        if ($this->tarkeys == '' || $this->tarkeys == null) {
             $errors[] = 'Tärkeys ei saa olla tyhjä!';
         }
-        if(!is_numeric($this->tarkeys)||$this->tarkeys<0||$this->tarkeys>10) {
+        if (!is_numeric($this->tarkeys) || $this->tarkeys < 0 || $this->tarkeys > 10) {
             $errors[] = 'Tärkeysasteen pitää olla numero väliltä 1-10';
         }
         return $errors;

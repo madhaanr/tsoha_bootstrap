@@ -39,23 +39,24 @@ class AskareController extends BaseController {
         View::make('askare/edit.html.twig', array('askare' => $askare));
     }
 
-    public static function update($id) {
+    public function update($id) {
         $params = $_POST;
 
         $askare = new Askare(array(
+            'id'=>$id,
             'nimi' => $params['nimi'],
             'tarkeys' => $params['tarkeys'],
             'luokka' => $params['luokka'],
-            'kuvaus' => $params['kuvaus'],
-            'lisatty' => $params['lisatty']
+            'kuvaus' => $params['kuvaus']
         ));
 
         $errors = $askare->errors();
         if (count($errors) == 0) {
-            $askare->update();
-            Redirect::to('/askare/' . $askare->id, array('message' => 'Askaretta muokattu!'));
+            $askare->update($id);
+//            Kint::dump($askare);
+            Redirect::to('/askare/' . $id .'/edit', array('message' => 'Askaretta muokattu!'));
         } else {
-            View::make('askare/:id/edit.html.twig', array('errors' => $errors, 'askare' => $askare));
+            View::make('askare/edit.html.twig', array('errors' => $errors, 'askare' => $askare));
         }
     }
 
