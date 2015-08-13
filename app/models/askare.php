@@ -79,7 +79,7 @@ class Askare extends BaseModel {
     public function update($id) {
         $query = DB::connection()->prepare('update askare set nimi = :nimi, tarkeys = :tarkeys, kuvaus = :kuvaus where id=:id');
         $query->execute(array('nimi' => $this->nimi, 'tarkeys' => $this->tarkeys, 'kuvaus' => $this->kuvaus,'id' => $id));
-        $row = $query->fetch();
+//        $row = $query->fetch();
 //        $this->id = $row['id'];
     }
 

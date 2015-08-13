@@ -47,3 +47,10 @@ $routes->post('/askare/:id/edit', function($id) {
 $routes->post('/askare/:id/destroy', function($id) {
     AskareController::destroy($id);
 });
+
+$routes->get('/login', function() {
+    KukaController::login();
+});
+$routes->post('/login',function() {
+    KukaController::handle_login();
+});
