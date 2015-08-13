@@ -50,10 +50,11 @@ class Askare extends BaseModel {
     }
 
     public function save() {
-        $query = DB::connection()->prepare('INSERT INTO ASKARE (nimi, tarkeys, luokka, kuvaus, lisatty) VALUES (:nimi, :tarkeys, :luokka,:kuvaus, NOW()) RETURNING id');
+        $query = DB::connection()->prepare('INSERT INTO ASKARE (nimi, tarkeys, luokka, kuvaus, lisatty) VALUES (:nimi,:tarkeys,:luokka,:kuvaus,NOW()) RETURNING id');
         $query->execute(array('nimi' => $this->nimi, 'tarkeys'=>$this->tarkeys, 'luokka'=>$this->luokka, 'kuvaus' => $this->kuvaus));
-//        Kint::dump($this->nimi . $this->tarkeys . $this->luokka . $this->kuvaus);
+//        Kint::dump($this->nimi . $this->tarkeys . $this->luokka . $this->kuvaus);  
         $row = $query->fetch();
+        Kint::dump($row);
         $this->id = $row['id'];
     }
 

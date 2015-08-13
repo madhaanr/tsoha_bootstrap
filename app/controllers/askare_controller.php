@@ -24,8 +24,8 @@ class AskareController extends BaseController {
             'luokka' => $params['luokka'],
             'kuvaus' => $params['kuvaus']
         ));
-//        $askare = new Askare($attributes);
         $errors = $askare->errors();
+//        $askare = new Askare($attributes);
         if (count($errors) == 0) {
             $askare->save();
             Redirect::to('/askare/' . $askare->id, array('message' => 'Askare lisätty!'));

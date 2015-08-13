@@ -13,7 +13,7 @@ CREATE TABLE ASKARE (
     id SERIAL PRIMARY KEY,
     nimi varchar(50) NOT NULL,
     tarkeys integer,
-    luokka integer references luokka(id) on update cascade,
+    luokka varchar,
     kuvaus varchar,
     lisatty DATE,
     kuka integer references kuka(id)
