@@ -9,9 +9,11 @@ class Kuka extends BaseModel {
     }
     
     public static function authenticate($nimi, $salasana) {
-        $query = DB::connection()->prepare('select * from kuka where nimi=:nimi and salasana=:salasana limit 1', array('nimi'=>$nimi,'salasana'=>$salasana));
-        $query->execute();
+        Kint::dump($nimi,$salasana);
+        $query = DB::connection()->prepare('select * from kuka where nimi = :nimi and salasana = :salasana limit 1');
+        $query->execute(array('nimi'=>$nimi,'salasana'=>$salasana));
         $row = $query->fetch();
+        Kint::dump($row);
         if($row) {
             return new Kuka(array('id'=>$row['id'],'nimi'=>$row['nimi'],'salasana'=>$row['salasana']));
         } else {

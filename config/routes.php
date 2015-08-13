@@ -4,13 +4,13 @@ $routes->get('/', function() {
     HelloWorldController::index();
 });
 
-$routes->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
-});
-
-$routes->get('/login', function() {
-    HelloWorldController::login();
-});
+//$routes->get('/hiekkalaatikko', function() {
+//    HelloWorldController::sandbox();
+//});
+//
+//$routes->get('/login', function() {
+//    HelloWorldController::login();
+//});
 
 //  $routes->get('/askareenmuokkaus', function() {
 //      HelloWorldController::askareenmuokkaus();
