@@ -62,7 +62,7 @@ class AskareController extends BaseController {
 
     public static function destroy($id) {
         $askare = new Askare(array('id' => $id));
-        $askare->destroy();
+        $askare->destroy($id);
         Redirect::to('/askare', array('message' => 'Askare poistettu'));
     }
 

@@ -50,8 +50,8 @@ class Askare extends BaseModel {
     }
 
     public function save() {
-        $query = DB::connection()->prepare('INSERT INTO ASKARE (nimi, kuvaus, lisatty) VALUES (:nimi,:kuvaus, NOW()) RETURNING id');
-        $query->execute(array('nimi' => $this->nimi, 'kuvaus' => $this->kuvaus));
+        $query = DB::connection()->prepare('INSERT INTO ASKARE (nimi, tarkeys, luokka, kuvaus, lisatty) VALUES (:nimi, :tarkeys, :luokka,:kuvaus, NOW()) RETURNING id');
+        $query->execute(array('nimi' => $this->nimi, 'tarkeys'=>$this->tarkeys, 'luokka'=>$this->luokka, 'kuvaus' => $this->kuvaus));
 //        Kint::dump($this->nimi . $this->tarkeys . $this->luokka . $this->kuvaus);
         $row = $query->fetch();
         $this->id = $row['id'];
@@ -83,6 +83,11 @@ class Askare extends BaseModel {
 //        $this->id = $row['id'];
     }
 
+    public function destroy($id) {
+        $query = DB::connection()->prepare('delete from askare where id=:id');
+        $query->execute(array('id'=>$id));
+    }
+    
     public function validate_name() {
         $errors = array();
         if ($this->nimi == '' || $this->nimi == null) {
