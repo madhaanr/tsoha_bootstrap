@@ -20,4 +20,11 @@ class Kuka extends BaseModel {
             return null;
         }
     }
+    
+     public static function find($id) {
+        $query = DB::connection()->prepare('select * from kuka where id = :id limit 1');
+        $query->execute(array('id'=>$id));
+        $row = $query->fetch();
+        return new Kuka(array('id'=>$id, 'nimi'=>$row['nimi'],'salasana'=>$row['salasana']));
+    }
 }

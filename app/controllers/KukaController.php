@@ -19,5 +19,4 @@ class KukaController extends BaseController {
             Redirect::to('/', array('message' => 'Tervetuloa takaisin' . $kuka->nimi . '!'));
         }
     }
-
 }
