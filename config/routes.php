@@ -1,30 +1,34 @@
 <?php
 
-$routes->get('/askare', function() {
+function check_logged_in() {
+    BaseController::check_logged_in();
+}
+
+$routes->get('/askare', 'check_logged_in', function() {
     AskareController::index();
 });
 
-$routes->post('/askare', function() {
+$routes->post('/askare','check_logged_in', function() {
     AskareController::store();
 });
 
-$routes->get('/askare/new', function() {
+$routes->get('/askare/new','check_logged_in', function() {
     AskareController::create();
 });
 
-$routes->get('/askare/:id', function($id) {
+$routes->get('/askare/:id','check_logged_in', function($id) {
     AskareController::find($id);
 });
 
-$routes->get('/askare/:id/edit', function($id) {
+$routes->get('/askare/:id/edit','check_logged_in', function($id) {
     AskareController::edit($id);
 });
 
-$routes->post('/askare/:id/edit', function($id) {
+$routes->post('/askare/:id/edit','check_logged_in', function($id) {
     AskareController::update($id);
 });
 
-$routes->post('/askare/:id/destroy', function($id) {
+$routes->post('/askare/:id/destroy','check_logged_in', function($id) {
     AskareController::destroy($id);
 });
 
@@ -35,6 +39,10 @@ $routes->post('/login',function() {
     KukaController::handle_login();
 });
 
-$routes->get('/', function() {
+$routes->get('/','check_logged_in', function() {
     AskareController::index();
+});
+
+$routes->post('/logout', function() {
+    KukaController::logout();
 });
