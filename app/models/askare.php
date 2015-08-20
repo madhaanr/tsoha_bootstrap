@@ -2,7 +2,7 @@
 
 class Askare extends BaseModel {
 
-    public $id, $nimi, $tarkeys, $luokka, $kuvaus, $lisatty, $kuka;
+    public $id, $nimi, $tarkeys, $luokka, $kuvaus, $lisatty, $kuka_id;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -23,7 +23,7 @@ class Askare extends BaseModel {
                 'luokka' => $row['luokka'],
                 'kuvaus' => $row['kuvaus'],
                 'lisatty' => $row['lisatty'],
-                'kuka' => $row['kuka']
+                'kuka_id' => $row['kuka_id']
             ));
         }
         return $askareet;
@@ -42,7 +42,7 @@ class Askare extends BaseModel {
                 'luokka' => $row['luokka'],
                 'kuvaus' => $row['kuvaus'],
                 'lisatty' => $row['lisatty'],
-                'kuka' => $row['kuka']
+                'kuka_id' => $row['kuka_id']
             ));
             return $askare;
         }
@@ -70,7 +70,7 @@ class Askare extends BaseModel {
                 'luokka' => $row['luokka'],
                 'kuvaus' => $row['kuvaus'],
                 'lisatty' => $row['lisatty'],
-                'kuka' => $row['kuka']
+                'kuka_id' => $row['kuka_id']
             ));
             return $askare;
         }

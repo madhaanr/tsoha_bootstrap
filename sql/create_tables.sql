@@ -16,5 +16,12 @@ CREATE TABLE ASKARE (
     luokka varchar,
     kuvaus varchar,
     lisatty DATE,
-    kuka integer references kuka(id)
+    kuka_id integer references kuka(id)
+);
+CREATE TABLE ASKARE_LUOKKA (
+    askare_id integer,
+    luokka_id integer,
+    primary key(askare_id,luokka_id),
+    foreign key (askare_id) references askare(id) on update cascade,
+    foreign key (luokka_id) references luokka(id) on update cascade
 );
