@@ -6,7 +6,7 @@ class Askare extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array('validate_name', 'validate_tarkeys');
+        $this->validators = array('validate_nimi', 'validate_tarkeys');
     }
 
     public static function all() {
@@ -50,8 +50,8 @@ class Askare extends BaseModel {
     }
 
     public function save() {
-        $query = DB::connection()->prepare('INSERT INTO ASKARE (nimi, tarkeys, luokka, kuvaus, lisatty) VALUES (:nimi,:tarkeys,:luokka,:kuvaus,NOW()) RETURNING id');
-        $query->execute(array('nimi' => $this->nimi, 'tarkeys'=>$this->tarkeys, 'luokka'=>$this->luokka, 'kuvaus' => $this->kuvaus));
+        $query = DB::connection()->prepare('INSERT INTO ASKARE (nimi, tarkeys, luokka, kuvaus, lisatty, kuka_id) VALUES (:nimi,:tarkeys,:luokka,:kuvaus,NOW(),:kuka_id) RETURNING id');
+        $query->execute(array('nimi' => $this->nimi, 'tarkeys'=>$this->tarkeys, 'luokka'=>$this->luokka, 'kuvaus' => $this->kuvaus, 'kuka_id'=>$_SESSION['user']));
 //        Kint::dump($this->nimi . $this->tarkeys . $this->luokka . $this->kuvaus);  
         $row = $query->fetch();
         Kint::dump($row);
@@ -89,7 +89,7 @@ class Askare extends BaseModel {
         $query->execute(array('id'=>$id));
     }
     
-    public function validate_name() {
+    public function validate_nimi() {
         $errors = array();
         if ($this->nimi == '' || $this->nimi == null) {
             $errors[] = 'Nimi ei saa olla tyhjä!';
