@@ -88,6 +88,14 @@ class Askare extends BaseModel {
         $query = DB::connection()->prepare('delete from askare where id=:id');
         $query->execute(array('id'=>$id));
     }
+    
+    public function validate_nimi() {
+        $errors = array();
+        if ($this->nimi == '' || $this->nimi == null) {
+            $errors[] = 'Nimi ei saa olla tyhjä!';
+        }
+        return $errors;
+    }
 
     public function validate_tarkeys() {
         $errors = array();
@@ -99,5 +107,4 @@ class Askare extends BaseModel {
         }
         return $errors;
     }
-
 }
