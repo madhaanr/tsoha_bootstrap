@@ -24,11 +24,11 @@ class LuokkaController extends BaseController {
         ));
         $errors = $luokka->errors();
 
-//        if (count($errors) == 0) {
+        if (count($errors) == 0) {
             $luokka->save();
             Redirect::to('/luokka/' . $luokka->id, array('message' => 'Luokka lisätty!'));
-//        } else {
-//            View::make('luokka/new.html.twig', array('errors' => $errors, 'luokka' => $luokka));
-//        }
+        } else {
+            View::make('luokka/new.html.twig', array('errors' => $errors, 'luokka' => $luokka));
+        }
     }
 }
