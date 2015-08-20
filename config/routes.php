@@ -63,3 +63,15 @@ $routes->get('/luokka/new', 'check_logged_in', function() {
 $routes->get('/luokka/:id', 'check_logged_in', function($id) {
     LuokkaController::find($id);
 });
+
+$routes->get('/luokka/:id/edit', 'check_logged_in', function($id) {
+    LuokkaController::edit($id);
+});
+
+$routes->post('/luokka/:id/edit', 'check_logged_in', function($id) {
+    LuokkaController::update($id);
+});
+
+$routes->post('/luokka/:id/destroy', 'check_logged_in', function($id) {
+    LuokkaController::destroy($id);
+});
