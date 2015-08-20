@@ -46,3 +46,7 @@ $routes->get('/','check_logged_in', function() {
 $routes->post('/logout', function() {
     KukaController::logout();
 });
+
+$routes->get('/luokka', 'check_logged_in', function() {
+    LuokkaController::index();
+});
