@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Askareet</h1>
+    <p>     
+        <a href="luokka/new" class="btn btn-default">Lisää luokka</a>  
+    </p>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Nimi</th>
+                <th>Kuvaus</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>          
+            <tr>
+                <td>{{luokka.nimi}}</td>
+                <td>{{luokka.kuvaus}}</td>
+                <td><a href="{{base_path}}/luokka/{{luokka.id}}/edit" class="btn btn-default">Muokkaa</a></td>
+                <form method="post" action="{{base_path}}/luokka/{{luokka.id}}/destroy">
+                    <td><button class="btn btn-danger">Poista</button></td>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

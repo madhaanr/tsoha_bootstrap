@@ -50,3 +50,7 @@ $routes->post('/logout', function() {
 $routes->get('/luokka', 'check_logged_in', function() {
     LuokkaController::index();
 });
+
+$routes->get('luokka/:id', 'check_logged_in', function($id) {
+    LuokkaController::find($id);
+});
