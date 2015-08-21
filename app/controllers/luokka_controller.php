@@ -61,5 +61,4 @@ class LuokkaController extends BaseController {
         $luokka->destroy($id);
         Redirect::to('/luokka', array('message' => 'Luokka poistettu'));
     }
-
 }

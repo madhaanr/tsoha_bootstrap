@@ -2,7 +2,7 @@
 
 class Askare extends BaseModel {
 
-    public $id, $nimi, $tarkeys, $luokka, $kuvaus, $lisatty, $kuka_id;
+    public $id, $nimi, $tarkeys, $luokat, $kuvaus, $lisatty, $kuka_id;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -14,13 +14,11 @@ class Askare extends BaseModel {
         $query->execute();
         $rows = $query->fetchAll();
         $askareet = array();
-
         foreach ($rows as $row) {
             $askareet[] = new Askare(array(
                 'id' => $row['id'],
                 'nimi' => $row['nimi'],
                 'tarkeys' => $row['tarkeys'],
-                'luokka' => $row['luokka'],
                 'kuvaus' => $row['kuvaus'],
                 'lisatty' => $row['lisatty'],
                 'kuka_id' => $row['kuka_id']
@@ -39,7 +37,6 @@ class Askare extends BaseModel {
                 'id' => $row['id'],
                 'nimi' => $row['nimi'],
                 'tarkeys' => $row['tarkeys'],
-                'luokka' => $row['luokka'],
                 'kuvaus' => $row['kuvaus'],
                 'lisatty' => $row['lisatty'],
                 'kuka_id' => $row['kuka_id']
@@ -50,45 +47,30 @@ class Askare extends BaseModel {
     }
 
     public function save() {
-        $query = DB::connection()->prepare('INSERT INTO ASKARE (nimi, tarkeys, luokka, kuvaus, lisatty, kuka_id) VALUES (:nimi,:tarkeys,:luokka,:kuvaus,NOW(),:kuka_id) RETURNING id');
-        $query->execute(array('nimi' => $this->nimi, 'tarkeys'=>$this->tarkeys, 'luokka'=>$this->luokka, 'kuvaus' => $this->kuvaus, 'kuka_id'=>$_SESSION['user']));
-//        Kint::dump($this->nimi . $this->tarkeys . $this->luokka . $this->kuvaus);  
+        $query = DB::connection()->prepare('INSERT INTO ASKARE (nimi, tarkeys, kuvaus, lisatty, kuka_id) VALUES (:nimi,:tarkeys,:kuvaus, NOW(),:kuka_id) RETURNING id');
+        $query->execute(array('nimi' => $this->nimi, 'tarkeys' => $this->tarkeys, 'kuvaus' => $this->kuvaus, 'kuka_id' => $_SESSION['user']));
         $row = $query->fetch();
-        Kint::dump($row);
         $this->id = $row['id'];
-    }
-
-    public static function edit($id) {
-        $query = DB::connection()->prepare('select * from askare where id = :id limit 1');
-        $query->execute(array('id' => $id));
-        $row = $query->fetch();
-        if ($row) {
-            $askare = new Askare(array(
-                'id' => $row['id'],
-                'nimi' => $row['nimi'],
-                'tarkeys' => $row['tarkeys'],
-                'luokka' => $row['luokka'],
-                'kuvaus' => $row['kuvaus'],
-                'lisatty' => $row['lisatty'],
-                'kuka_id' => $row['kuka_id']
-            ));
-            return $askare;
+        $luokat = $this->luokat;
+        foreach ($luokat as $luokka) {
+            $query2 = DB::connection()->prepare('INSERT INTO ASKARE_LUOKKA (askare_id, luokka_id) values (:askare_id,:luokka_id)');
+            $query2->execute(array('askare_id' => $row['id'], 'luokka_id' => $luokka));
         }
-        return null;
+        
+        
+        Kint::dump($this);
     }
 
     public function update($id) {
         $query = DB::connection()->prepare('update askare set nimi = :nimi, tarkeys = :tarkeys, kuvaus = :kuvaus where id=:id');
-        $query->execute(array('nimi' => $this->nimi, 'tarkeys' => $this->tarkeys, 'kuvaus' => $this->kuvaus,'id' => $id));
-//        $row = $query->fetch();
-//        $this->id = $row['id'];
+        $query->execute(array('nimi' => $this->nimi, 'tarkeys' => $this->tarkeys, 'kuvaus' => $this->kuvaus, 'id' => $id));
     }
 
     public function destroy($id) {
         $query = DB::connection()->prepare('delete from askare where id=:id');
-        $query->execute(array('id'=>$id));
+        $query->execute(array('id' => $id));
     }
-    
+
     public function validate_nimi() {
         $errors = array();
         if ($this->nimi == '' || $this->nimi == null) {
@@ -107,4 +89,23 @@ class Askare extends BaseModel {
         }
         return $errors;
     }
+
+//     public static function edit($id) {
+//        $query = DB::connection()->prepare('select * from askare where id = :id limit 1');
+//        $query->execute(array('id' => $id));
+//        $row = $query->fetch();
+//        if ($row) {
+//            $askare = new Askare(array(
+//                'id' => $row['id'],
+//                'nimi' => $row['nimi'],
+//                'tarkeys' => $row['tarkeys'],
+//                'luokka' => $row['luokka'],
+//                'kuvaus' => $row['kuvaus'],
+//                'lisatty' => $row['lisatty'],
+//                'kuka_id' => $row['kuka_id']
+//            ));
+//            return $askare;
+//        }
+//        return null;
+//    }
 }

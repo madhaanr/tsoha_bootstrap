@@ -13,7 +13,6 @@ CREATE TABLE ASKARE (
     id SERIAL PRIMARY KEY,
     nimi varchar(50) NOT NULL,
     tarkeys integer,
-    luokka varchar,
     kuvaus varchar,
     lisatty DATE,
     kuka_id integer references kuka(id)

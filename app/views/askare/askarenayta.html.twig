@@ -6,7 +6,7 @@
             <tr>
                 <th>Nimi</th>
                 <th>Tärkeysaste</th>
-                <th>Luokka</th>
+                <th>Luokat</th>
                 <th>Kuvaus</th>
                 <th>Lisätty</th>
             </tr>
@@ -15,7 +15,9 @@
             <tr>        
                 <td>{{askare.nimi}}</td>
                 <td>{{askare.tarkeys}}</td>
-                <td>{{askare.luokka}}</td>
+                <td>{% for luokka in askare.luokat %}
+                {{luokka}}
+                {% endfor %}</td>
                 <td>{{askare.kuvaus}}</td>      
                 <td>{{askare.lisatty}}</td>
             </tr>

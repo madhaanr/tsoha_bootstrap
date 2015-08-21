@@ -3,7 +3,8 @@
 class AskareController extends BaseController {
 
     public static function create() {
-        View::make('askare/new.html.twig');
+        $luokat = Luokka::all();
+        View::make('askare/new.html.twig', array('luokat'=>$luokat));
     }
 
     public static function index() {
@@ -18,16 +19,22 @@ class AskareController extends BaseController {
 
     public static function store() {
         $params = $_POST;
-        $askare = new Askare(array(
+        $luokat = $params['luokat'];
+        $attributes = array(
             'nimi' => $params['nimi'],
             'tarkeys' => $params['tarkeys'],
-            'luokka' => $params['luokka'],
-            'kuvaus' => $params['kuvaus']
-        ));
+            'kuvaus' => $params['kuvaus'],
+            'luokat' => array()
+        );
+        foreach($luokat as $luokka) {
+            $attributes['luokat'][]=$luokka;
+        }   
+        $askare = new Askare($attributes);
+//        Kint::dump($askare);
         $errors = $askare->errors();
-//        $askare = new Askare($attributes);
         if (count($errors) == 0) {
             $askare->save();
+//            Kint::dump($askare);
             Redirect::to('/askare/' . $askare->id, array('message' => 'Askare lisätty!'));
         } else {
             View::make('askare/new.html.twig', array('errors' => $errors, 'askare' => $askare));
@@ -41,20 +48,17 @@ class AskareController extends BaseController {
 
     public function update($id) {
         $params = $_POST;
-
         $askare = new Askare(array(
-            'id'=>$id,
+            'id' => $id,
             'nimi' => $params['nimi'],
             'tarkeys' => $params['tarkeys'],
             'luokka' => $params['luokka'],
             'kuvaus' => $params['kuvaus']
         ));
-
         $errors = $askare->errors();
         if (count($errors) == 0) {
             $askare->update($id);
-//            Kint::dump($askare);
-            Redirect::to('/askare/' . $id .'/edit', array('message' => 'Askaretta muokattu!'));
+            Redirect::to('/askare/' . $id . '/edit', array('message' => 'Askaretta muokattu!'));
         } else {
             View::make('askare/edit.html.twig', array('errors' => $errors, 'askare' => $askare));
         }
@@ -65,5 +69,4 @@ class AskareController extends BaseController {
         $askare->destroy($id);
         Redirect::to('/askare', array('message' => 'Askare poistettu'));
     }
-
 }
