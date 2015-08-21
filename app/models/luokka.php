@@ -49,7 +49,7 @@ class Luokka extends BaseModel {
         $row = $query->fetch();
         if ($row) {
             $luokka = new Luokka(array(
-                'id' => $row['id'],
+                'id' => $row['id '],
                 'nimi' => $row['nimi'],               
                 'kuvaus' => $row['kuvaus'],
             ));
@@ -59,14 +59,14 @@ class Luokka extends BaseModel {
     }
 
     public function update($id) {
-        $query = DB::connection()->prepare('update luokka set nimi = :nimi, kuvaus = :kuvaus where id=:id');
+        $query = DB::connection()->prepare('update luokka set nimi = :nimi, kuvaus = :kuvaus where id =:id');
         $query->execute(array('nimi' => $this->nimi, 'kuvaus' => $this->kuvaus,'id' => $id));
 //        $row = $query->fetch();
 //        $this->id = $row['id'];
     }
 
     public function destroy($id) {
-        $query = DB::connection()->prepare('delete from luokka where id=:id');
+        $query = DB::connection()->prepare('delete from luokka where id =:id');
         $query->execute(array('id'=>$id));
     }
 

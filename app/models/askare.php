@@ -18,9 +18,6 @@ class Askare extends BaseModel {
             $askareet[] = new Askare(array(
                 'id' => $row['id'],
                 'nimi' => $row['nimi'],
-                'tarkeys' => $row['tarkeys'],
-                'kuvaus' => $row['kuvaus'],
-                'lisatty' => $row['lisatty'],
                 'kuka_id' => $row['kuka_id']
             ));
         }
@@ -31,15 +28,24 @@ class Askare extends BaseModel {
         $query = DB::connection()->prepare('SELECT * FROM ASKARE WHERE id = :id LIMIT 1');
         $query->execute(array('id' => $id));
         $row = $query->fetch();
-
+        $query2 = DB::connection()->prepare('SELECT * FROM ASKARE_LUOKKA WHERE askare_id = :id');
+        $query2->execute(array('id' => $id));
+        $row2 = $query2->fetchAll();
+        Kint::dump($row2);
+        $luokat = array();
+        if ($row2) {
+            foreach ($row2 as $luokka_id) {
+                $luokat[] = $luokka_id['id'];
+            }
+        }
         if ($row) {
             $askare = new Askare(array(
                 'id' => $row['id'],
                 'nimi' => $row['nimi'],
                 'tarkeys' => $row['tarkeys'],
                 'kuvaus' => $row['kuvaus'],
-                'lisatty' => $row['lisatty'],
-                'kuka_id' => $row['kuka_id']
+                'kuka_id' => $row['kuka_id'],
+                'luokat' => $luokat
             ));
             return $askare;
         }
@@ -52,12 +58,11 @@ class Askare extends BaseModel {
         $row = $query->fetch();
         $this->id = $row['id'];
         $luokat = $this->luokat;
+        Kint::dump($this->luokat);
         foreach ($luokat as $luokka) {
             $query2 = DB::connection()->prepare('INSERT INTO ASKARE_LUOKKA (askare_id, luokka_id) values (:askare_id,:luokka_id)');
             $query2->execute(array('askare_id' => $row['id'], 'luokka_id' => $luokka));
         }
-        
-        
         Kint::dump($this);
     }
 

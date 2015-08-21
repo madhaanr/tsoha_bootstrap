@@ -8,10 +8,6 @@
         <thead>
             <tr>
                 <th>Nimi</th>
-                <th>Lisäyspäivä</th>
-                <th>Tärkeysaste</th>
-                <th>Luokka</th>
-                <th>Kuvaus</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -20,10 +16,6 @@
             {% for askare in askareet %}
             <tr>
                 <td><a href="{{base_path}}/askare/{{askare.id}}">{{askare.nimi}}</a></td>
-                <td>{{askare.lisatty}}</td>
-                <td>{{askare.tarkeys}}</td>
-                <td>{{askare.luokka}}</td>
-                <td>{{askare.kuvaus}}</td>
                 <td><a href="{{base_path}}/askare/{{askare.id}}/edit" class="btn btn-default">Muokkaa</a></td>
                 <form method="post" action="{{base_path}}/askare/{{askare.id}}/destroy">
                     <td><button class="btn btn-danger">Poista</button></td>

@@ -15,12 +15,14 @@
             <tr>        
                 <td>{{askare.nimi}}</td>
                 <td>{{askare.tarkeys}}</td>
-                <td>{% for luokka in askare.luokat %}
-                {{luokka}}
-                {% endfor %}</td>
-                <td>{{askare.kuvaus}}</td>      
-                <td>{{askare.lisatty}}</td>
-            </tr>
-        </tbody>
-    </table>
-{% endblock %}
+                <td>
+                    {% for luokka in askare.luokat %}
+                    {{luokka}}
+                    {% endfor %}
+                 </td>
+                 <td>{{askare.kuvaus}}</td>      
+                 <td>{{askare.lisatty}}</td>
+                </tr>
+            </tbody>
+        </table>
+        {% endblock %}

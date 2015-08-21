@@ -19,6 +19,7 @@ class AskareController extends BaseController {
 
     public static function store() {
         $params = $_POST;
+        Kint::dump($params);
         $luokat = $params['luokat'];
         $attributes = array(
             'nimi' => $params['nimi'],
@@ -30,12 +31,12 @@ class AskareController extends BaseController {
             $attributes['luokat'][]=$luokka;
         }   
         $askare = new Askare($attributes);
-//        Kint::dump($askare);
+        Kint::dump($askare);
         $errors = $askare->errors();
         if (count($errors) == 0) {
             $askare->save();
 //            Kint::dump($askare);
-            Redirect::to('/askare/' . $askare->id, array('message' => 'Askare lisätty!'));
+//            Redirect::to('/askare/' . $askare->id, array('message' => 'Askare lisätty!'));
         } else {
             View::make('askare/new.html.twig', array('errors' => $errors, 'askare' => $askare));
         }
@@ -52,13 +53,12 @@ class AskareController extends BaseController {
             'id' => $id,
             'nimi' => $params['nimi'],
             'tarkeys' => $params['tarkeys'],
-            'luokka' => $params['luokka'],
             'kuvaus' => $params['kuvaus']
         ));
         $errors = $askare->errors();
         if (count($errors) == 0) {
             $askare->update($id);
-            Redirect::to('/askare/' . $id . '/edit', array('message' => 'Askaretta muokattu!'));
+//            Redirect::to('/askare/' . $id . '/edit', array('message' => 'Askaretta muokattu!'));
         } else {
             View::make('askare/edit.html.twig', array('errors' => $errors, 'askare' => $askare));
         }
