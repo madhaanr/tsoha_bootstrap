@@ -20,23 +20,23 @@ class AskareController extends BaseController {
     public static function store() {
         $params = $_POST;
         Kint::dump($params);
-        $luokat = $params['luokat'];
+        $askareen_luokat = $params['luokat'];
         $attributes = array(
             'nimi' => $params['nimi'],
             'tarkeys' => $params['tarkeys'],
-            'kuvaus' => $params['kuvaus'],
-            'luokat' => array()
+            'kuvaus' => $params['kuvaus']
         );
-        foreach($luokat as $luokka) {
-            $attributes['luokat'][]=$luokka;
-        }   
+//        foreach($luokat as $luokka) {
+//            $attributes['luokat'][]=$luokka;
+//        }   
         $askare = new Askare($attributes);
         Kint::dump($askare);
         $errors = $askare->errors();
         if (count($errors) == 0) {
             $askare->save();
+            $askareen_luokat->save();
 //            Kint::dump($askare);
-//            Redirect::to('/askare/' . $askare->id, array('message' => 'Askare lisätty!'));
+            Redirect::to('/askare/' . $askare->id, array('message' => 'Askare lisätty!'));
         } else {
             View::make('askare/new.html.twig', array('errors' => $errors, 'askare' => $askare));
         }

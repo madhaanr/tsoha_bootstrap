@@ -2,7 +2,7 @@
 
 class Askare extends BaseModel {
 
-    public $id, $nimi, $tarkeys, $luokat, $kuvaus, $lisatty, $kuka_id;
+    public $id, $nimi, $tarkeys, $kuvaus, $lisatty, $kuka_id;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -28,24 +28,23 @@ class Askare extends BaseModel {
         $query = DB::connection()->prepare('SELECT * FROM ASKARE WHERE id = :id LIMIT 1');
         $query->execute(array('id' => $id));
         $row = $query->fetch();
-        $query2 = DB::connection()->prepare('SELECT * FROM ASKARE_LUOKKA WHERE askare_id = :id');
-        $query2->execute(array('id' => $id));
-        $row2 = $query2->fetchAll();
-        Kint::dump($row2);
-        $luokat = array();
-        if ($row2) {
-            foreach ($row2 as $luokka_id) {
-                $luokat[] = $luokka_id['id'];
-            }
-        }
+//        $query2 = DB::connection()->prepare('SELECT * FROM ASKARE_LUOKKA WHERE askare_id = :id');
+//        $query2->execute(array('id' => $id));
+//        $row2 = $query2->fetchAll();
+////        Kint::dump($row2);
+//        $luokat = array();
+//        if ($row2) {
+//            foreach ($row2 as $luokka_id) {
+//                $luokat[] = $luokka_id['luokka_id'];
+//            }
+//        }
         if ($row) {
             $askare = new Askare(array(
                 'id' => $row['id'],
                 'nimi' => $row['nimi'],
                 'tarkeys' => $row['tarkeys'],
                 'kuvaus' => $row['kuvaus'],
-                'kuka_id' => $row['kuka_id'],
-                'luokat' => $luokat
+                'kuka_id' => $row['kuka_id']
             ));
             return $askare;
         }
