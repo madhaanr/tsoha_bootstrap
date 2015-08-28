@@ -56,13 +56,7 @@ class Askare extends BaseModel {
         $query->execute(array('nimi' => $this->nimi, 'tarkeys' => $this->tarkeys, 'kuvaus' => $this->kuvaus, 'kuka_id' => $_SESSION['user']));
         $row = $query->fetch();
         $this->id = $row['id'];
-        $luokat = $this->luokat;
-        Kint::dump($this->luokat);
-        foreach ($luokat as $luokka) {
-            $query2 = DB::connection()->prepare('INSERT INTO ASKARE_LUOKKA (askare_id, luokka_id) values (:askare_id,:luokka_id)');
-            $query2->execute(array('askare_id' => $row['id'], 'luokka_id' => $luokka));
-        }
-        Kint::dump($this);
+        return $this->id;
     }
 
     public function update($id) {

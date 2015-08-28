@@ -4,7 +4,7 @@ class AskareController extends BaseController {
 
     public static function create() {
         $luokat = Luokka::all();
-        View::make('askare/new.html.twig', array('luokat'=>$luokat));
+        View::make('askare/new.html.twig', array('luokat' => $luokat));
     }
 
     public static function index() {
@@ -20,22 +20,21 @@ class AskareController extends BaseController {
     public static function store() {
         $params = $_POST;
         Kint::dump($params);
-        $askareen_luokat = $params['luokat'];
-        $attributes = array(
+        $luokka_ids = $params['luokat'];
+        $askare = new Askare(array(
             'nimi' => $params['nimi'],
             'tarkeys' => $params['tarkeys'],
             'kuvaus' => $params['kuvaus']
-        );
-//        foreach($luokat as $luokka) {
-//            $attributes['luokat'][]=$luokka;
-//        }   
-        $askare = new Askare($attributes);
-        Kint::dump($askare);
+        ));
         $errors = $askare->errors();
         if (count($errors) == 0) {
-            $askare->save();
-            $askareen_luokat->save();
-//            Kint::dump($askare);
+            $askare_id = $askare->save();
+            Kint::dump($askare_id);
+            Kint::dump($luokka_ids);
+            foreach ($luokka_ids as $luokka_id) {
+                $askare_luokka = new AskareLuokka(array($askare_id,(int) $luokka_id));
+                $askare_luokka->save();
+            }
             Redirect::to('/askare/' . $askare->id, array('message' => 'Askare lisätty!'));
         } else {
             View::make('askare/new.html.twig', array('errors' => $errors, 'askare' => $askare));
@@ -69,4 +68,5 @@ class AskareController extends BaseController {
         $askare->destroy($id);
         Redirect::to('/askare', array('message' => 'Askare poistettu'));
     }
+
 }
